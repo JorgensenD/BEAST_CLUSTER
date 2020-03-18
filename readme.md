@@ -42,7 +42,7 @@ beast -overwrite  -beagle_SSE <NAME>.xml
 # copy files back to the home dir
 
 
-cp <NAME>.* $PBS_O_WORKDIR/
+cp * $PBS_O_WORKDIR/
 ```
 Considerations:
 1. Replace `<NAME>` with the XML file name
