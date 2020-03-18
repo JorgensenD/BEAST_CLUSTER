@@ -49,4 +49,4 @@ Considerations:
 2. Exporting Java options seems to be required to allow BEAST to write files
 3. Adjust walltime and resources to match your job
 
-Full instructions for submitting and monitoring jobs, choosing resources and a runnable template are available on the Imperial RCS [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) pages.
+Full instructions for submitting and monitoring jobs, choosing resources and a runable template are available on the Imperial RCS [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) pages.
