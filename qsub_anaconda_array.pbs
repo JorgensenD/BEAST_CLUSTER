@@ -24,8 +24,8 @@ cp *.state $PWD
 cp *.log $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log
 cp *.trees $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees
 cp *.traj $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
-cat ${xmlprefix}.log >> $PWD/${xmlprefix}.log
-cat ${xmlprefix}.trees >> $PWD/${xmlprefix}.trees
+cat ${xmlprefix}.log >> $PBS_O_WORKDIR/${xmlprefix}.log
+cat ${xmlprefix}.trees >> $PBS_O_WORKDIR/${xmlprefix}.trees
 
 exit $?
 
