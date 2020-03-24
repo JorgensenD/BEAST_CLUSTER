@@ -1,0 +1,32 @@
+PBS -S /bin/bash
+#PBS -N sarscov2phydyn
+#PBS -l select=1:ncpus=4:mem=4000mb,walltime=71:00:00
+#PBS -j oe
+#PBS -J 1-20
+
+
+module load anaconda3/personal
+source activate PhyDyn
+
+export _JAVA_OPTIONS="-Djava.io.tmpdir=$TMP"
+
+
+export xmlprefix
+
+
+cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml $TMPDIR
+
+cd $TMPDIR
+
+timeout 70h beast -threads 4 ${xmlprefix}.$PBS_ARRAY_INDEX.xml
+
+cp *.state $PWD
+cp *.log $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log
+cp *.trees $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees
+cp *.traj $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
+cat ${xmlprefix}.log >> $PWD/${xmlprefix}.log
+cat ${xmlprefix}.trees >> $PWD/${xmlprefix}.trees
+
+exit $?
+
+
