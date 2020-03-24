@@ -29,4 +29,5 @@ cat ${xmlprefix}.trees >> $PWD/${xmlprefix}.trees
 
 exit $?
 
+# qsub -v xmlprefix=NL_duplicates_labs, qsub_anaconda_array.pbs 
 
