@@ -20,7 +20,7 @@ cd $TMPDIR
 
 timeout 70h beast -threads 4 ${xmlprefix}.$PBS_ARRAY_INDEX.xml
 
-cp *.state $PWD
+cp *.state $PBS_O_WORKDIR
 cp *.log $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log
 cp *.trees $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees
 cp *.traj $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
