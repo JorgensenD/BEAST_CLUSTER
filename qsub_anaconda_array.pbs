@@ -18,7 +18,7 @@ cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml $TMPDIR
 
 cd $TMPDIR
 
-timeout 70h beast -threads 4 ${xmlprefix}.$PBS_ARRAY_INDEX.xml
+timeout 70h beast -beagle_SSE -threads 4 ${xmlprefix}.$PBS_ARRAY_INDEX.xml
 
 cp *.state $PBS_O_WORKDIR
 cp *.log $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log
