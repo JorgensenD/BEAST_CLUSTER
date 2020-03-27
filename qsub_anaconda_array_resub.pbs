@@ -36,5 +36,8 @@ cat *.traj > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
 exit $?
 
 #- useage -#
+# xpath <<XML file>> '//logger/@fileName' 2>/dev/null # will show you the log output names in your script.
+# These need to be used when resuming a previously run job as the $TMPDIR filenames
 # qsub -v xmlprefix=<<YOUR_PREFIX>>, qsub_anaconda_array_resub.pbs 
+
 
