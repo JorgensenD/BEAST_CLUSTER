@@ -2,7 +2,7 @@
 #PBS -N sarscov2phydyn
 #PBS -l select=1:ncpus=4:mem=4000mb,walltime=71:00:00
 #PBS -j oe
-#PBS -J 1-20
+#PBS -J 1-22
 
 
 module load anaconda3/personal
@@ -13,14 +13,17 @@ export _JAVA_OPTIONS="-Djava.io.tmpdir=$TMP"
 
 export xmlprefix
 
-
-cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml $TMPDIR
-cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.state $TMPDIR
-cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $TMPDIR/${xmlprefix}.log
-cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees $TMPDIR/${xmlprefix}.trees
-cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $TMPDIR/seir.${xmlprefix}.traj
+cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.* $TMPDIR
 
 cd $TMPDIR
+logfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="tracelog"]/@fileName)' 2>/dev/null)
+trajfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="popTrajLog"]/@fileName)' 2>/dev/null)
+treefile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@mode="tree"]/@fileName)' 2>/dev/null)
+
+mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $logfile
+mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $trajfile
+mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees $treefile
+
 if [ -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.state ]
 then
     timeout 70h beast -beagle_SSE -threads 4 -resume ${xmlprefix}.$PBS_ARRAY_INDEX.xml
@@ -36,8 +39,4 @@ cat *.traj > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
 exit $?
 
 #- useage -#
-# xpath <<XML file>> '//logger/@fileName' 2>/dev/null # will show you the log output names in your script.
-# These need to be used when resuming a previously run job as the $TMPDIR filenames
 # qsub -v xmlprefix=<<YOUR_PREFIX>>, qsub_anaconda_array_resub.pbs 
-
-
