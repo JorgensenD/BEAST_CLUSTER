@@ -33,16 +33,11 @@ source deactivate PhyDyn
 To run BEAST on the cluster you will need to load your XML and produce a shell script to interact with the queuing system on HPC. A commented simple shell script is below. An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
 
 ```bash
-## Selecting resorces required
+## Selecting resorces required and write location for output and errors ~ useful to debug
 #PBS -l walltime=55:00:00
 #PBS -l select=1:ncpus=2:mem=5gb
-
-## Write location for output and errors ~ important for debugging 
 #PBS -o beastrun.stdout
 #PBS -e beastrun.stderr
- 
-## These can be merged instead:
-#PBS -j oe
 
 ## load in the PhyDyn environment created earlier
 module load anaconda3/personal
