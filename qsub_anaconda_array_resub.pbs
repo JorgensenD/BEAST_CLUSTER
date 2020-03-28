@@ -20,9 +20,9 @@ logfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="tracelog
 trajfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="popTrajLog"]/@fileName)' 2>/dev/null)
 treefile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@mode="tree"]/@fileName)' 2>/dev/null)
 
-mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $logfile
-mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $trajfile
-mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees $treefile
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $logfile
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $trajfile
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees $treefile
 
 if [ -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.state ]
 then
