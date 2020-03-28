@@ -24,7 +24,7 @@ You can then deactivate this environment
 
 To run BEAST on the cluster you will need to load your XML and produce a shell script to interact with the queuing system on HPC. A commented simple shell script is below. An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
 
-```
+```bash
  ## Selecting resorces required 
 #PBS -l walltime=55:00:00
 #PBS -l select=1:ncpus=2:mem=5gb
@@ -38,7 +38,7 @@ To run BEAST on the cluster you will need to load your XML and produce a shell s
 module load anaconda3/personal
 source activate PhyDyn
 
- ## Java occasionally fails trying to write to it's own temporary directory - this forces it to write to the HPC attached storage
+ ## Java occasionally fails trying to write to it's temporary directory - this writes to the HPC attached storage
 export _JAVA_OPTIONS="-Djava.io.tmpdir=$TMP"
 
  ## copy required files to the temporary directory on the compute node
