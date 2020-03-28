@@ -1,6 +1,8 @@
 ## Running PhyDyn on Imperial HPC
 ### Register to use HPC
  Follow Imperial [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) instructions to register for the HPC cluster and log in.
+ 
+ On Windows use the [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/) shell to log in and interact with the cluster. Follow the instructions [here](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/rds/) to set up your networked home directory for the HPC cluster.
 
  ### Setting up a BEAST 2.6.2 environment
  HPC staff no longer update most of the installed programs on the cluster. The easiest way to use more recent versions of these programs is to run them in an [anaconda](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/applications/conda/) environment.
@@ -50,3 +52,6 @@ Considerations:
 3. Adjust walltime and resources to match your job
 
 Full instructions for submitting and monitoring jobs, choosing resources and a runable template are available on the Imperial RCS [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) pages.
+
+An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
+
