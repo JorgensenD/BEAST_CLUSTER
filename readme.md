@@ -22,36 +22,38 @@
 You can then deactivate this environment
 ``` source deactivate PhyDyn ```
 
-To run BEAST on the cluster you will need to load your XML and produce a shell script to interact with the queuing system on HPC. An example shell script is below.
+To run BEAST on the cluster you will need to load your XML and produce a shell script to interact with the queuing system on HPC. A commented simple shell script is below. An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
 
 ```
+ ## Selecting resorces required 
 #PBS -l walltime=55:00:00
 #PBS -l select=1:ncpus=2:mem=5gb
+ ## Write location for output and errors ~ important for debugging 
 #PBS -o beastrun.stdout
 #PBS -e beastrun.stderr
+ ## These can be merged instead:
+#PBS -j oe
 
-# beast and java required, beagle optional to optimise the performance
+ ## load in the PhyDyn environment created earlier
 module load anaconda3/personal
 source activate PhyDyn
 
+ ## Java occasionally fails trying to write to it's own temporary directory - this forces it to write to the HPC attached storage
 export _JAVA_OPTIONS="-Djava.io.tmpdir=$TMP"
 
-# copy required xml file to the TMPDIR on the computer being used
+ ## copy required files to the temporary directory on the compute node
 cp $PBS_O_WORKDIR/<NAME>.* $TMPDIR
 
-beast -overwrite  -beagle_SSE <NAME>.xml
+ ## Run beast using command line tags
+beast  -beagle_SSE <NAME>.xml
 
-# copy files back to the home dir
-
-
+ ## copy files back to the submission directory - anything not copied back will be lost
 cp * $PBS_O_WORKDIR/
 ```
 Considerations:
 1. Replace `<NAME>` with the XML file name
-2. Exporting Java options seems to be required to allow BEAST to write files
-3. Adjust walltime and resources to match your job
+2. Adjust walltime and resources to match your job
+3. A list of command line tag options for beast can be seen by running `beast -help` inside your conda environment
 
 Full instructions for submitting and monitoring jobs, choosing resources and a runable template are available on the Imperial RCS [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) pages.
-
-An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
 
