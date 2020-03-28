@@ -8,19 +8,19 @@
  HPC staff no longer update most of the installed programs on the cluster. The easiest way to use more recent versions of these programs is to run them in an [anaconda](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/applications/conda/) environment.
 
  To get started with anaconda run the following in the login node:
- ``` module load anaconda3/personal ```
+ ```bash module load anaconda3/personal ```
  If it is your first time using anaconda on the cluster you will also need to run
-``` anaconda-setup ```
+```bash anaconda-setup ```
  You can then create your BEAST environment and name it using the -n tag. I have named my environment PhyDyn.
- ``` conda create -n PhyDyn beast2=2.6.2 ```
+ ```bash conda create -n PhyDyn beast2=2.6.2 ```
  You will then need to load (activate) this environment and install packages
- ``` 
+ ```bash 
  source activate PhyDyn
  conda install beagle
  packagemanager -add PhyDyn 
  ```
 You can then deactivate this environment
-``` source deactivate PhyDyn ```
+```bash source deactivate PhyDyn ```
 
 To run BEAST on the cluster you will need to load your XML and produce a shell script to interact with the queuing system on HPC. A commented simple shell script is below. An example array script is included [here](https://github.com/JorgensenD/BEAST_CLUSTER/blob/master/qsub_anaconda_array_resub.pbs) to submit BEAST2 array jobs on the cluster.
 
