@@ -23,8 +23,11 @@ anaconda-setup
  ``` 
  source activate PhyDyn
  conda install beagle
+ conda install perl-xml-xpath
  packagemanager -add PhyDyn 
  ```
+Select Y to install dependencies for packages.
+
 You can then deactivate this environment
 ```
 source deactivate PhyDyn
