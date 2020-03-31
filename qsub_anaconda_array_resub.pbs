@@ -39,4 +39,4 @@ cat *.traj > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
 exit $?
 
 #- useage -#
-# qsub -v xmlprefix=<<YOUR_PREFIX>>, qsub_anaconda_array_resub.pbs 
+# qsub -q pqcovid19 -v xmlprefix=<<YOUR_PREFIX>>, qsub_anaconda_array_resub.pbs 
