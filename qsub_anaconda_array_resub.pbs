@@ -16,9 +16,9 @@ export xmlprefix
 cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.* $TMPDIR
 
 cd $TMPDIR
-logfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="tracelog"]/@fileName)' 2>/dev/null)
-trajfile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@id="popTrajLog"]/@fileName)' 2>/dev/null)
-treefile=$(xpath ${xmlprefix}.$PBS_ARRAY_INDEX.xml 'string(//logger[@mode="tree"]/@fileName)' 2>/dev/null)
+logfile=$(xpath -q -e 'string(//logger[@id="tracelog"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml )
+trajfile=$(xpath -q -e 'string(//logger[@id="popTrajLog"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml)
+treefile=$(xpath -q -e 'string(//logger[@mode="tree"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml)
 
 [ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $logfile
 [ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $trajfile
