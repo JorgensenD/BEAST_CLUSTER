@@ -1,0 +1,44 @@
+#PBS -S /bin/bash
+#PBS -N sarscov2phydyn
+#PBS -l select=1:ncpus=4:mem=4000mb,walltime=71:00:00
+#PBS -j oe
+#PBS -J 1-20
+
+sleep $PBS_ARRAY_INDEX
+
+module load anaconda3/personal
+source activate PhyDyn
+
+export _JAVA_OPTIONS="-Djava.io.tmpdir=$TMP"
+
+
+export xmlprefix
+
+cp $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.* $TMPDIR
+
+cd $TMPDIR
+
+logfile=$(xpath -q -e 'string(//logger[@id="tracelog"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml )
+trajfile=$(xpath -q -e 'string(//logger[@id="popTrajLog"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml)
+treefile=$(xpath -q -e 'string(//logger[@mode="tree"]/@fileName)' "${xmlprefix}"."${PBS_ARRAY_INDEX}".xml)
+
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.log $logfile
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj $trajfile
+[ ! -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees ] || mv ${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees $treefile
+
+if [ -f ${xmlprefix}.$PBS_ARRAY_INDEX.xml.state ]
+then
+    timeout 70h beast -beagle_SSE -threads 4 -resume ${xmlprefix}.$PBS_ARRAY_INDEX.xml
+else
+    timeout 70h beast -beagle_SSE -threads 4 ${xmlprefix}.$PBS_ARRAY_INDEX.xml
+fi
+
+cp *state $PBS_O_WORKDIR
+cat *.log > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.log
+cat *.trees > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.trees
+cat *.traj > $PBS_O_WORKDIR/${xmlprefix}.$PBS_ARRAY_INDEX.xml.traj
+
+exit $?
+
+#- useage -#
+# qsub -q pqcovid19 -v xmlprefix=<<YOUR_PREFIX>>, qsub_anaconda_array_resub_mc3.pbs 
