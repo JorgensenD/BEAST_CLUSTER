@@ -24,7 +24,7 @@ anaconda-setup
  source activate PhyDyn
  conda install beagle
  conda install perl-xml-xpath
- packagemanager -add PhyDyn 
+ packagemanager -add PhyDyn CoupledMCMC
  ```
 Select Y to install dependencies for packages.
 
