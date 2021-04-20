@@ -1,6 +1,6 @@
 ## Update
 This tutorial no longer works for 2.6.2 as the open-jdk version crashes regularly...
-*USE beast2=2.6.3*
+*USE beast2=2.6.3 and downgrade openjdk conda install openjdk=8.0.112*
 
 ## Running PhyDyn on Imperial HPC
 ### Register to use HPC
