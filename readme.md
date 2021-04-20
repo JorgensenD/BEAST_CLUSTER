@@ -1,3 +1,7 @@
+## Update
+This tutorial no longer works for 2.6.2 as the open-jdk version crashes regularly...
+*USE beast2=2.6.3*
+
 ## Running PhyDyn on Imperial HPC
 ### Register to use HPC
  Follow Imperial [getting started](https://www.imperial.ac.uk/admin-services/ict/self-service/research-support/rcs/support/getting-started/) instructions to register for the HPC cluster and log in.
@@ -22,9 +26,9 @@ anaconda-setup
  You will then need to load (activate) this environment and install packages
  ``` 
  source activate PhyDyn
- conda install beagle
- conda install perl-xml-xpath
- packagemanager -add PhyDyn CoupledMCMC
+ conda install beagle perl-xml-xpath
+ packagemanager -add PhyDyn
+ packagemanager -add CoupledMCMC
  ```
 Select Y to install dependencies for packages.
 
